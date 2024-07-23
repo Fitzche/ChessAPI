@@ -81,30 +81,183 @@ public class Board {
         }
         return null;
     }
+    public boolean checkExist(int letter, int number) {
+        Position pos = getPosition(letter, number);
+        if (pos != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
-    public Position takeUp() {
+    public Position takeUp(Position pos) {
+        return getPosition(pos.letter, pos.number +1);
 
     }
-    public Position takeUpRight() {
-        
+    public Position takeUpRight(Position pos) {
+        return getPosition(pos.letter +1, pos.number +1);
     }
-    public Position takeRight() {
-        
+    public Position takeRight(Position pos) {
+        return getPosition(pos.letter+1, pos.number );
     }
-    public Position takeDownRight() {
-        
+    public Position takeDownRight(Position pos) {
+        return getPosition(pos.letter+1, pos.number -1);
     }
-    public Position takeDown() {
-        
+    public Position takeDown(Position pos) {
+        return getPosition(pos.letter, pos.number -1);
     }
-    public Position takeUpLeft() {
-        
+    public Position takeUpLeft(Position pos) {
+        return getPosition(pos.letter -1, pos.number +1);
     }
-    public Position takeDownLeft() {
-        
+    public Position takeDownLeft(Position pos) {
+        return getPosition(pos.letter-1, pos.number -1);
     }
-    public Position takeLeft() {
-        
+    public Position takeLeft(Position pos) {
+        return getPosition(pos.letter-1, pos.number );
     }
+    public ArrayList<Position> takeDiagonaleUpRight(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeUpRight(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+    public ArrayList<Position> takeDiagonaleUpLeft(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeUpLeft(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+    public ArrayList<Position> takeDiagonaleDownRight(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeDownRight(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+    public ArrayList<Position> takeDiagonaleDownLeft(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeDownLeft(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+
+
+    public ArrayList<Position> takeDroiteUp(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeUp(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+
+    public ArrayList<Position> takeDroiteDown(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeDown(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+
+    public ArrayList<Position> takeDroiteRight(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeRight(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+
+    public ArrayList<Position> takeDiagonaleLeft(Position pos) {
+        ArrayList<Position> poss = new ArrayList<Position>();
+        Position actualPos = pos;
+        boolean finished = false;
+        do {
+            Position posToAdd = takeLeft(actualPos);
+            if (posToAdd != null) {
+                poss.add(actualPos);
+                actualPos = posToAdd;
+            } else {
+                finished = true;
+            }
+        } while (!finished);
+
+        return poss;
+
+    }
+    
+
+    
 }
