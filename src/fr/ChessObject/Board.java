@@ -174,4 +174,89 @@ public class Board {
         return possreturned;
 
     }
+
+
+    public boolean checkPlay(Position posBase, Position posArr) {
+        boolean legalMove = false;
+        boolean smallRock = false;
+        boolean tallRock = false;
+        Color color = posBase.piece.color;
+        for (Position pos: posBase.getPossiblePosition(posBase.piece.type, posBase.piece.color)) {
+            if (pos.equals(posArr)) {
+                legalMove = true;
+            }
+        }
+
+        if (posBase.piece.type.equals(PieceType.KING_NOMOVE)) {
+            if (posArr.number == posBase.number && (posBase.letter - posArr.letter == 2 || posBase.letter - posArr.letter == -2)) {
+                if (posBase.letter - posArr.letter == 2) {
+                    if (this.getPosition(posBase.letter, posBase.number +1).piece == null && this.getPosition(posBase.letter, posBase.number +2).piece == null && this.getPosition(posBase.letter, posBase.number +3).piece != null && this.getPosition(posBase.letter, posBase.number +3).piece.type.equals(PieceType.TOWER_NOMOVE)) {
+                        boolean safe = true;
+                        if (!checkKingSafety(posBase, this.getPosition(posBase.letter, posBase.number +1), color)) {
+                            safe = false;
+                        } else if (!checkKingSafety(posBase, this.getPosition(posBase.letter, posBase.number +2), color)) {
+                            safe = false;
+                        } 
+                        
+                        if (safe) {
+                            smallRock = true;
+                            legalMove = true;
+                        }
+                        
+                    }
+                }
+
+                if (posBase.letter - posArr.letter == -2) {
+                    if (this.getPosition(posBase.letter, posBase.number -3).piece == null&&this.getPosition(posBase.letter, posBase.number -1).piece == null && this.getPosition(posBase.letter, posBase.number -2).piece == null && this.getPosition(posBase.letter, posBase.number -4).piece != null && this.getPosition(posBase.letter, posBase.number -4).piece.type.equals(PieceType.TOWER_NOMOVE)) {
+                        boolean safe = true;
+                        if (!checkKingSafety(posBase, this.getPosition(posBase.letter, posBase.number -1), color)) {
+                            safe = false;
+                        } else if (!checkKingSafety(posBase, this.getPosition(posBase.letter, posBase.number -2), color)) {
+                            safe = false;
+                        }  else if (!checkKingSafety(posBase, this.getPosition(posBase.letter, posBase.number -3), color)) {
+                            safe = false;
+                        }
+                        
+                        if (safe) {
+                            smallRock = true;
+                            legalMove = true;
+                        }
+                        
+                    }
+                }
+            }
+        }
+
+
+        if (!checkKingSafety(posBase, posArr, color)) {
+            legalMove = false;
+        }
+
+        return legalMove;
+
+        
+        
+    }
+
+
+    public boolean checkKingSafety(Position posBase, Position posArr, Color color) {
+        boolean legalMove = true;
+        Board board2 = new Board();
+        board2.poss = (ArrayList<Position>) this.poss.clone();
+        for (Position pos2:board2.getPositions()) {
+            if (pos2.piece != null && (pos2.piece.type.equals(PieceType.KING) || pos2.piece.type.equals(PieceType.KING_NOMOVE) ) && pos2.piece.color.equals(color)) {
+                        
+                board2.getPosition(posArr.letter, posArr.number).piece = board2.getPosition(posBase.letter, posBase.number).piece;
+                board2.getPosition(posBase.letter, posBase.number).piece = null;
+                for (Position posss: board2.getPositions()) {
+                    if (posss.equals(pos2)) {
+                        legalMove = false;
+                    }
+                }
+            }
+        }
+
+        return legalMove;
+    }
+
 }
