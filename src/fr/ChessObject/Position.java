@@ -10,6 +10,7 @@ public class Position {
     public int slot;
     public int letter;
     public int number;
+    public Piece piece;
 
     public Position(String str, Board board, int slot, int letter, int number) {
         this.name = str;
@@ -64,7 +65,7 @@ public class Position {
                             nDif = this.number - pos.number;
                         }
 
-                        if ((nDif == 2 && lDif == 1) || (nDif == 1 && lDif == 2)) {
+                        if (((nDif == 2 && lDif == 1) || (nDif == 1 && lDif == 2)) && (pos.piece == null || !pos.piece.color.equals(this.piece.color))) {
                             possiblesPositions.add(pos);
                         }
 

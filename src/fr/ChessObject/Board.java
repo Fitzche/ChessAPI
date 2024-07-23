@@ -89,7 +89,29 @@ public class Board {
             return false;
         }
     }
-
+    public Position takeDirection(Position pos, Direction dir) {
+        switch (dir) {
+            case Down:
+                return takeDown(pos);
+            case Down_Left:
+                return takeDownLeft(pos);
+            case Down_Right:
+                return takeDownRight(pos);
+            case Left:
+                return takeLeft(pos);
+            case Right:
+                return takeRight(pos);
+            case Up:
+                return takeUp(pos);
+            case Up_Left:
+                return takeUpLeft(pos);
+            case Up_Right:
+                return takeUpRight(pos);
+            default:
+                return null;
+            
+        }
+    }
 
     public Position takeUp(Position pos) {
         return getPosition(pos.letter, pos.number +1);
@@ -116,12 +138,13 @@ public class Board {
     public Position takeLeft(Position pos) {
         return getPosition(pos.letter-1, pos.number );
     }
-    public ArrayList<Position> takeDiagonaleUpRight(Position pos) {
+
+    public ArrayList<Position> takeDroiteDirection(Direction dir, Position pos) {
         ArrayList<Position> poss = new ArrayList<Position>();
         Position actualPos = pos;
         boolean finished = false;
         do {
-            Position posToAdd = takeUpRight(actualPos);
+            Position posToAdd = takeDirection(actualPos, dir);
             if (posToAdd != null) {
                 poss.add(actualPos);
                 actualPos = posToAdd;
@@ -131,133 +154,24 @@ public class Board {
         } while (!finished);
 
         return poss;
-
     }
-    public ArrayList<Position> takeDiagonaleUpLeft(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
+
+    public ArrayList<Position> takeDroiteDiectionPieceLogique(Color color, Direction dr, Position pos) {
+        ArrayList<Position> poss = takeDroiteDirection(dr, pos);
+        ArrayList<Position> possreturned = new ArrayList<Position>();
+        boolean stop = false;
+        int x = 0;
         do {
-            Position posToAdd = takeUpLeft(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
+            stop = true;
+            if (pos.piece == null) {
+                stop = false;
+                possreturned.add(pos);
+            } else if (!pos.piece.color.equals(color)) {
+                possreturned.add(pos);
             }
-        } while (!finished);
-
-        return poss;
+            
+        }while (!stop);
+        return possreturned;
 
     }
-    public ArrayList<Position> takeDiagonaleDownRight(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeDownRight(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-    public ArrayList<Position> takeDiagonaleDownLeft(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeDownLeft(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-
-
-    public ArrayList<Position> takeDroiteUp(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeUp(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-
-    public ArrayList<Position> takeDroiteDown(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeDown(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-
-    public ArrayList<Position> takeDroiteRight(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeRight(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-
-    public ArrayList<Position> takeDiagonaleLeft(Position pos) {
-        ArrayList<Position> poss = new ArrayList<Position>();
-        Position actualPos = pos;
-        boolean finished = false;
-        do {
-            Position posToAdd = takeLeft(actualPos);
-            if (posToAdd != null) {
-                poss.add(actualPos);
-                actualPos = posToAdd;
-            } else {
-                finished = true;
-            }
-        } while (!finished);
-
-        return poss;
-
-    }
-    
-
-    
 }
