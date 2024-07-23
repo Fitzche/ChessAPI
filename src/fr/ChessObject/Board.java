@@ -37,21 +37,21 @@ public class Board {
                 }
                 switch (i2) {
                     case 0:
-                        l = "1";
+                        n = "1";
                     case 1:
-                        l = "2";
+                        n = "2";
                     case 2:
-                        l = "3";
+                        n = "3";
                     case 3:
-                        l = "4";
+                        n = "4";
                     case 4:
-                        l = "5";
+                        n = "5";
                     case 5:
-                        l = "6";
+                        n = "6";
                     case 6:
-                        l = "7";
+                        n = "7";
                     case 7:
-                        l = "8";
+                        n = "8";
                     
 
                 }
@@ -60,12 +60,51 @@ public class Board {
                 if (x==0) {
                     x = 0;
                 }
-                poss.add(new Position((l+n), this, (64 -x  + i2))  );
+                poss.add(new Position((l+n), this, (64 -x  + i2), i, i2 ) );
             }
         }
         if (this.poss.size() != 64) {
             System.out.println("erreur creation board");
         }
 
+    }
+
+    public ArrayList<Position> getPositions() {
+        return this.poss;
+    }
+
+    public Position getPosition(int letter, int number) {
+        for (Position pos: this.getPositions()) {
+            if (pos.letter == letter && pos.number == number) {
+                return pos;
+            }
+        }
+        return null;
+    }
+
+
+    public Position takeUp() {
+
+    }
+    public Position takeUpRight() {
+        
+    }
+    public Position takeRight() {
+        
+    }
+    public Position takeDownRight() {
+        
+    }
+    public Position takeDown() {
+        
+    }
+    public Position takeUpLeft() {
+        
+    }
+    public Position takeDownLeft() {
+        
+    }
+    public Position takeLeft() {
+        
     }
 }

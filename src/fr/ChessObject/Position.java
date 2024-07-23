@@ -8,23 +8,95 @@ public class Position {
     public String name;
     public Board board;
     public int slot;
+    public int letter;
+    public int number;
 
-    public Position(String str, Board board, int slot) {
+    public Position(String str, Board board, int slot, int letter, int number) {
         this.name = str;
         this.board = board;
         this.slot = slot;
+        this.letter = letter;
+        this.number = number;
     }
 
     public ArrayList<Position> getPossiblePosition(PieceType type) {
+        ArrayList<Position> possiblesPositions = new ArrayList<Position>();
         switch (type) {
             case FOU:
-                break;
+                for (Position pos:board.getPositions()) {
+                    int lDif = 0;
+                    int nDif = 0;
+                    if (pos.letter != this.letter & pos.number != this.number) {
+                        if (pos.letter > this.letter) {
+                            lDif = pos.letter - this.letter;
+                        }  else {
+                            lDif = this.letter - pos.letter;
+                        }
+
+                        if (pos.number > this.number) {
+                            nDif = pos.number - this.number;
+                        }  else {
+                            nDif = this.number - pos.number;
+                        }
+
+                        if (nDif == lDif) {
+                            possiblesPositions.add(pos);
+                        }
+
+
+                    }
+                    
+                }
             case HORSE:
-                break;
+                for (Position pos: board.getPositions()) {
+                    int lDif = 0;
+                    int nDif = 0;
+                    if (pos.letter != this.letter & pos.number != this.number) {
+                        if (pos.letter > this.letter) {
+                            lDif = pos.letter - this.letter;
+                        }  else {
+                            lDif = this.letter - pos.letter;
+                        }
+
+                        if (pos.number > this.number) {
+                            nDif = pos.number - this.number;
+                        }  else {
+                            nDif = this.number - pos.number;
+                        }
+
+                        if ((nDif == 2 && lDif == 1) || (nDif == 1 && lDif == 2)) {
+                            possiblesPositions.add(pos);
+                        }
+
+
+                    }
+                }
             case KING:
-                break;
+                for (Position pos: board.getPositions()) {
+                    int lDif = 0;
+                    int nDif = 0;
+                    if (pos.letter != this.letter & pos.number != this.number) {
+                        if (pos.letter > this.letter) {
+                                lDif = pos.letter - this.letter;
+                            }  else {
+                                lDif = this.letter - pos.letter;
+                            }
+
+                        if (pos.number > this.number) {
+                                nDif = pos.number - this.number;
+                            }  else {
+                                nDif = this.number - pos.number;
+                        }
+
+                        if (nDif < 2 && lDif < 2) {
+                            possiblesPositions.add(pos);
+                        }
+
+
+                    }
+                }
             case PION:
-                break;
+                
             case QUEEN:
                 break;
             case TOWER:
