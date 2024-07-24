@@ -2,12 +2,11 @@ package fr.ChessObject;
 
 import java.util.ArrayList;
 
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.Inventory;
 
-public class Board {
+
+public class Board  {
     public ArrayList<Position> poss = new ArrayList<Position>();
-    public Inventory inv = Bukkit.createInventory(null, 72);
+    
 
 
     public Board() {
@@ -236,6 +235,35 @@ public class Board {
 
         
         
+    }
+
+    public boolean playMove(Position pos1, Position pos2) {
+        if (checkPlay(pos1, pos2)) {
+            pos2.piece = pos1.piece;
+            pos1.piece = null;
+
+            
+            ArrayList<Position> poss = new ArrayList<>();
+            if (poss.size() == 0) {
+                won(pos2.piece.color);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void won(Color color) {
+        //A FINIR
+    }
+
+    public ArrayList<Position> getAllPossibleMove(Color color) {
+        ArrayList<Position> posOfColor = new ArrayList<>();
+        for (Position pos: this.getPositions()) {
+            if (pos.piece != null && pos.piece.color.equals(color)) {
+                posOfColor.addAll(pos.getPossiblePosition(pos.piece.type, color));
+            }
+        }
+        return posOfColor;
     }
 
 
