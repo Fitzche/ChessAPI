@@ -2,14 +2,17 @@ package fr.ChessObject;
 
 import java.util.ArrayList;
 
+import fr.GameInterface;
+
 
 
 public class Board  {
     public ArrayList<Position> poss = new ArrayList<Position>();
-    
+    public GameInterface interfaceOfGame;
 
 
-    public Board() {
+    public Board(GameInterface interfaceOfGame) {
+        this.interfaceOfGame = interfaceOfGame;
         for (int i = 0; i<8; i++) {
             for (int i2 = 0; i<8; i++) {
                 String l= "";
@@ -237,7 +240,8 @@ public class Board  {
         
     }
 
-    public boolean playMove(Position pos1, Position pos2) {
+    public Rapport playMove(Position pos1, Position pos2) {
+        boolean isWin = false;
         if (checkPlay(pos1, pos2)) {
             pos2.piece = pos1.piece;
             pos1.piece = null;
@@ -245,16 +249,16 @@ public class Board  {
             
             ArrayList<Position> poss = new ArrayList<>();
             if (poss.size() == 0) {
-                won(pos2.piece.color);
+                isWin = true;
             }
-            return true;
+            this.interfaceOfGame.winListener();
+            return new Rapport(isWin, true);
+            
         }
-        return false;
+        return new Rapport(isWin, false);
     }
 
-    public void won(Color color) {
-        //A FINIR
-    }
+    
 
     public ArrayList<Position> getAllPossibleMove(Color color) {
         ArrayList<Position> posOfColor = new ArrayList<>();
@@ -269,7 +273,7 @@ public class Board  {
 
     public boolean checkKingSafety(Position posBase, Position posArr, Color color) {
         boolean legalMove = true;
-        Board board2 = new Board();
+        Board board2 = new Board(this.interfaceOfGame);
         board2.poss = (ArrayList<Position>) this.poss.clone();
         for (Position pos2:board2.getPositions()) {
             if (pos2.piece != null && (pos2.piece.type.equals(PieceType.KING) || pos2.piece.type.equals(PieceType.KING_NOMOVE) ) && pos2.piece.color.equals(color)) {
