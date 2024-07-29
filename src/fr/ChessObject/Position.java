@@ -2,7 +2,7 @@ package fr.ChessObject;
 
 import java.util.ArrayList;
 
-import net.minecraft.server.v1_8_R1.Slot;
+
 
 public class Position {
     public String name;

@@ -2,8 +2,6 @@ package fr.ChessObject;
 
 import java.util.ArrayList;
 
-import fr.GameInterface;
-
 
 
 public class Board  {
@@ -248,10 +246,19 @@ public class Board  {
 
             
             ArrayList<Position> poss = new ArrayList<>();
+            switch (pos2.piece.color) {
+                case BLACK:
+                    poss = getAllPossibleMove(Color.WHITE);
+                case WHITE:
+                    poss = getAllPossibleMove(Color.BLACK);
+                default:
+                    break;
+                
+            }
             if (poss.size() == 0) {
                 isWin = true;
             }
-            this.interfaceOfGame.winListener();
+            this.interfaceOfGame.winListener(pos2.piece.color);
             return new Rapport(isWin, true);
             
         }
