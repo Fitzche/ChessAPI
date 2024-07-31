@@ -240,6 +240,7 @@ public class Board  {
 
     public Rapport playMove(Position pos1, Position pos2) {
         boolean isWin = false;
+        boolean isNul = false;
         if (checkPlay(pos1, pos2)) {
             pos2.piece = pos1.piece;
             pos1.piece = null;
@@ -256,9 +257,25 @@ public class Board  {
                 
             }
             if (poss.size() == 0) {
-                isWin = true;
+                boolean inCheck = false;
+                Position kPos = null;
+                for (Position pos3 : getPositions()) {
+                    if (pos3.piece != null && (pos3.piece.type.equals(PieceType.KING_NOMOVE) || pos3.piece.type.equals(PieceType.KING)) && !pos3.piece.color.equals(pos2.piece.color)) {
+                        kPos = pos3;
+                    }
+                }
+                for (Position pos:this.getAllPossibleMove(pos2.piece.color)) {
+                    if (pos.equals(kPos)) {
+                        inCheck = true;
+                    }
+                }
+                if (inCheck) {
+                    this.interfaceOfGame.winListener(pos2.piece.color);
+                } else {
+                    this.interfaceOfGame.nulListener();
+                }
             }
-            this.interfaceOfGame.winListener(pos2.piece.color);
+            
             return new Rapport(isWin, true);
             
         }
